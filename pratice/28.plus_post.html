@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form name="form1" onsubmit="return false">
+        <input type="number" name="a"> +
+        <input type="number" name="b">
+        <button type="button" onclick="sendData()"> = </button>
+        <span id="c"></span>
+        <!-- 送出之後在 24.plus_api 做加總後再回傳到 span -->
+    </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        function sendData(){
+            // const obj = {
+            //     a: document.form1.a.value,
+            //     b: document.form1.b.value,
+            // };
+
+            $.post('26.plus_api_post.php',
+            $(document.form1).serialize(), // 表單欄位會轉換為 urlencoded 字串
+            function(data){
+                $('#c').html(data);
+            });
+        }
+    </script>
+
+</body>
+</html>

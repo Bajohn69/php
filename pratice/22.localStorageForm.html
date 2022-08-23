@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form name="form1" onsubmit="return false">
+        <!-- 先不要送出 -->
+        <input type="text" name="name" placeholder="姓名">
+        <br>
+        <input type="number" name="age" placeholder="年齡">
+        <br>
+        <button type="button" onclick="saveData()">下一步</button>
+        <!-- 這邊 button 要記得不能用 submit -->
+
+    </form>
+    
+    <!--
+
+        web storage:
+            localStorage
+            sessionStorage
+
+    -->
+
+    <script>
+        const cachedata = localStorage.getItem('my-key')
+        // 讓使用者把資料暫存在 localStorage
+
+        if(cachedata){
+            const cacheObj = JSON.parse(cachedata);
+            document.form1.name.value = cacheObj.name;
+            document.form1.age.value = cacheObj.age;
+        }
+
+        function saveData(){
+            const obj = {
+                name: document.form1.name.value,
+                age: document.form1.age.value,
+            };
+            localStorage.setItem('my-key', JSON.stringify(obj))
+
+            location.href = '21.localStorage.html';
+        }
+        
+        
+    </script>
+</body>
+</html>

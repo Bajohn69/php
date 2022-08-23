@@ -14,10 +14,10 @@
 </head>
 <body>
     <table>
-        <?php for($i=0;$i<5;$i++):
+        <?php for($i=0;$i<16;$i++):
         ?>
         <tr>
-            <?php for($k=0;$k<5;$k++):
+            <?php for($k=0;$k<16;$k++):
                 $c = sprintf("#%X%X00%X%X", $k, $k, $i, $i)
                 ?>
                 <td style="background-color:<?= $c ?>"></td>
