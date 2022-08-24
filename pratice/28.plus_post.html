@@ -27,8 +27,11 @@
             $.post('26.plus_api_post.php',
             $(document.form1).serialize(), // 表單欄位會轉換為 urlencoded 字串
             function(data){
-                $('#c').html(data);
-            });
+                $('#c').html(data.result);
+            },
+            'json'
+            // 
+            );
         }
     </script>
 
