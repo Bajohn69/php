@@ -38,6 +38,8 @@ if (!empty($_POST) and $_POST['account'] == 'Bajohn' and $_POST['password'] == '
                 </div>
             <?php else : ?>
                 <h2><?= $_SESSION['user1']['nickname'] . ' 您好' ?></h2>
+                <!-- <p><a href="40.logout.php">登出</a></p> -->
+                <button class="btn btn-primary"><a class="text-white" href="40.logout.php">登出</a></button>
             <?php endif ?>
 
         </div>
