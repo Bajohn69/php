@@ -20,4 +20,8 @@ try{
     echo "Exception:" . $ex->getMessage(); // 錯誤會發什麼訊息
 }
 
+if(! isset($_SESSION)){
+    session_start();
+}
+// 如果沒有 session_start() 就會加
 

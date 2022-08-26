@@ -1,8 +1,9 @@
 <?php
 require __DIR__ . '/parts/connect_db.php';
+$pageName = 'list'; // 頁面名稱
 
 
-$perPage = 2;  // 每頁最多有幾筆
+$perPage = 20;  // 每頁最多有幾筆
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
 // 取得資料的總筆數

@@ -34,4 +34,3 @@ echo json_encode([
     $pdo->lastInsertId(), // 最新的新增資料的主鍵
 ]);
 
-// 影響的資料筆數
