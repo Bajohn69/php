@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . '/parts/connect_db.php';
 $pageName = 'list'; // 頁面名稱
+$title = '資料列表';
 
 
 $perPage = 20;  // 每頁最多有幾筆
@@ -88,23 +89,42 @@ exit; // 拿來測試
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
+                        <th scope="col">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </th>
                         <th scope="col">#</th>
                         <th scope="col">name</th>
                         <th scope="col">email</th>
                         <th scope="col">mobile</th>
                         <th scope="col">birthday</th>
                         <th scope="col">address</th>
+                        <th scope="col">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($rows as $r) : ?>
                         <tr>
+                            <td>
+                                <a href="javascript: removeItem(<?= $r['sid'] ?>)" >
+                                <!-- onclick="event.currentTarget.closest('tr').remove()" 從前端刪除，但重整之後還是看得到 -->
+                                    <i class="text-danger fa-solid fa-trash-can"></i>
+                                </a>
+                            </td>
                             <td><?= $r['sid'] ?></td>
                             <td><?= $r['name'] ?></td>
                             <td><?= $r['email'] ?></td>
                             <td><?= $r['mobile'] ?></td>
                             <td><?= $r['birthday'] ?></td>
-                            <td><?= $r['address'] ?></td>
+                            <td><?= htmlentities($r['address'])  ?></td>
+                            <!-- 防止爛芭樂攻擊 (XSS) -->
+                            <!-- <td><?= strip_tags($r['address'])  ?></td> -->
+                            <td>
+                                <a href="data-edit.php?sid=<?= $r['sid'] ?>">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>
@@ -116,4 +136,12 @@ exit; // 拿來測試
 </div>
 
 <?php include __DIR__ . '/parts/scripts.php'; ?>
+<script>
+    function removeItem(sid){
+        if(confirm(`是否要刪除編號為 ${sid} 的資料?`)){
+            location.href = `data-del.php?sid=${sid}`
+        }
+    }
+    // 跳通知，確認才刪除
+</script>
 <?php include __DIR__ . '/parts/html-foot.php'; ?>
