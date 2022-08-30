@@ -26,7 +26,11 @@
                         <a class="nav-link <?= $pageName == 'list' ? 'active' : '' ?>" href="product-list.php">商品列表</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?= $pageName == 'insert' ? 'active' : '' ?>" href="data-insert.php">新增</a>
+                        <a class="nav-link <?= $pageName == 'cart' ? 'active' : '' ?>" href="cart.php">
+                            購物車
+                            <span class="badge rounded-pill text-bg-danger" id="cartCount"></span>
+                        </a>
+                        
                     </li>
 
                 </ul>
@@ -55,3 +59,24 @@
         </div>
     </nav>
 </div>
+
+<script>
+    // 按了加入購物車會改變購物車數量
+    function showCartCount(obj){
+        let count = 0;
+        for(let k in obj){
+            const item = obj[k];
+            count += +item.qty; // + 是讓字串轉型
+        }
+        $('#cartCount').html(count);
+    }
+
+    // 為了讓網頁一進來就呈現購物車數量
+    $.get(
+    'handle-cart.php', // 先不用給 qty
+    function(data){
+    showCartCount(data);
+    },
+    'json');
+    
+</script>
