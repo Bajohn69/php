@@ -3,12 +3,15 @@ require __DIR__ . '/parts/connect_db.php';
 $pageName = 'list'; // 頁面名稱
 
 $perPage = 4;  // 每頁最多有幾筆
+
+// 新德曰: 邏輯先釐清再寫，不要直接看程式碼
+
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-$cate = isset($_GET['cate']) ? intval($_GET['cate']) : 0; // 沒有的話就回到全部分類
+$cate = isset($_GET['cate']) ? intval($_GET['cate']) : 0; // 沒有的話就回到全部分類(0 代表全部)
 $lowp = isset($_GET['lowp']) ? intval($_GET['lowp']) : 0;  // Lower price
 $highp = isset($_GET['highp']) ? intval($_GET['highp']) : 0; // Higher price
 
-$qsp = []; // query string parameters
+$qsp = []; // query string parameters (網址)
 
 // 取得分類資料，把第 0 層的找出來
 $cates = $pdo->query("SELECT * FROM categories WHERE parent_sid=0")->fetchAll();
@@ -19,7 +22,7 @@ $cates = $pdo->query("SELECT * FROM categories WHERE parent_sid=0")->fetchAll();
 $where = ' WHERE 1 '; // 起頭
 if ($cate) {
     $where .= " AND category_sid=$cate "; // sql 前後都要加空格
-    $qsp['cate'] = $cate;
+    $qsp['cate'] = $cate; // 又有分類又有頁數
 }
 if ($lowp) {
     $where .= " AND price>=$lowp "; // sql 前後都要加空格
@@ -80,7 +83,7 @@ exit; // 拿來測試
             <!-- 只有全部分類要 unset -->
             <a type="button" class="btn <?= $allBtnStyle ?>" href="?
             <?php
-            $tmp = $qsp; //複製
+            $tmp = $qsp; //複製，避免下一次選擇還有殘存上一次選擇分類的問題
             unset($tmp['cate']);
             unset($tmp['lowp']);
             unset($tmp['highp']);
@@ -126,7 +129,7 @@ exit; // 拿來測試
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
-                        <a class="page-link" href="?<?php $qsp['page'] = $page - 1;
+                        <a class="page-link" href="?<?php $qsp['page'] = $page - 1; // $qsp 目前 $page 的值 -1 // href="? 問號要留著問號很重要 http_build_query 不會幫你生
                                                     echo http_build_query($qsp); ?>">
                             <i class="fa-solid fa-circle-arrow-left"></i>
                         </a>
@@ -193,7 +196,7 @@ exit; // 拿來測試
             qty
         });
 
-        $.get(
+        $.get( // 用 get 是因為 handle-cart.php 是用 $_GET
             'handle-cart.php',
             {sid, qty},
             function(data){

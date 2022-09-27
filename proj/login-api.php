@@ -9,7 +9,7 @@ $output = [
 ];
 
 // 1. 先檢查欄位資料是否足夠
-if(empty($_POST['email']) or empty($_POST['password'])){
+if(empty($_POST['email']) or empty($_POST['password'])){ // empty 跟 isset 差別，empty 範圍較廣
     $output['error'] = '參數不足';
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
 }
@@ -20,7 +20,7 @@ $stmt->execute([ $_POST['email'] ]);
 $row = $stmt->fetch();
 
 // 2. 以 email 去查詢資料
-if(empty($row)){
+if(empty($row)){ // 若 email 是錯的，後端會讀不到資料 = empty($row)
     $output['error'] = '帳號或密碼錯誤';
     $output['code'] = '400';
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
@@ -28,9 +28,11 @@ if(empty($row)){
 }
 
 // 3. 驗證密碼
+// $_POST['password'] 使用者填的
+// $row['password']) 後端資料 (hash 過的)
 if(password_verify($_POST['password'], $row['password'])){
     $output['success'] = true;
-    $_SESSION['user'] = [
+    $_SESSION['user'] = [ // 要跟 login.php 那隻的 user 名字一樣
         'id' => $row['id'],
         'email' => $row['email'],
         'nickname' => $row['nickname'],
