@@ -8,6 +8,11 @@ if(! isset($_SESSION['cart'])){
 
 $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
 $qty = isset($_GET['qty']) ? intval($_GET['qty']) : 0;
+$btn = isset($_GET['btnactive']) ? intval($_GET['btnactive']) : 0;
+
+$_SESSION = [
+    'btn' => $btn
+];
 
 // C: 加到購物車, sid, qty
 // R: 查看購物車內容

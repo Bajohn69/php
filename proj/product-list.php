@@ -87,10 +87,7 @@ exit; // 拿來測試
             echo http_build_query($tmp); ?>">全部</a>
             <?php foreach ($cates as $c) :
                 $btnStyle = $c['sid'] == $cate ? 'btn-primary' : 'btn-outline-primary' ?>
-                <a type="button" class="btn <?= $btnStyle ?>" href="?
-                <?php
-                $tmp['cate'] = $c['sid']; //你打錯
-                echo http_build_query($tmp); ?>">
+                <a type="button" class="btn <?= $btnStyle ?>" href="?<?php $tmp['cate'] = $c['sid'];echo http_build_query($tmp); ?>">
                     <?= $c['name'] ?>
                 </a>
             <?php endforeach ?>
