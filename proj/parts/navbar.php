@@ -61,10 +61,10 @@
 </div>
 
 <script>
-    // 按了加入購物車會改變購物車數量
+    // 按了加入購物車會改變購物車數量，用迴圈加總
     function showCartCount(obj){
         let count = 0;
-        for(let k in obj){
+        for(let k in obj){ // k 是 primary key，k 可以自己決定名稱
             const item = obj[k];
             count += +item.qty; // + 是讓字串轉型
         }
@@ -72,6 +72,7 @@
     }
 
     // 為了讓網頁一進來就呈現購物車數量
+    // 每進來一次 nav bar 就會用 ajax 
     $.get(
     'handle-cart.php', // 先不用給 qty
     function(data){

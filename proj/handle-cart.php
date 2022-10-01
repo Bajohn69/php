@@ -6,6 +6,7 @@ if(! isset($_SESSION['cart'])){
     $_SESSION['cart'] = [];
 }
 
+// sid 用產品編號也可以
 $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
 $qty = isset($_GET['qty']) ? intval($_GET['qty']) : 0;
 $btn = isset($_GET['btnactive']) ? intval($_GET['btnactive']) : 0;
@@ -25,7 +26,7 @@ if(! empty($sid)) { // 先查看有沒有此商品的 sid
         // 新增或變更
 
         if(!empty($_SESSION['cart'][$sid])){
-            // 若已存在 sid, 變更數量
+            // 若已存在 sid, 變更數量(更新)
             $_SESSION['cart'][$sid]['qty'] = $qty;
         } else {
             // 若不存在 sid, 新增

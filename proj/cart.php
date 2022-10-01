@@ -32,7 +32,7 @@ $pageName = 'cart'; // 頁面名稱
                     <tbody>
                         <?php
                         $total = 0;
-                        foreach ($_SESSION['cart'] as $k => $v) :
+                        foreach ($_SESSION['cart'] as $k => $v) : // key value
                             $total += $v['price'] * $v['qty'] //計算總價 
                         ?>
 

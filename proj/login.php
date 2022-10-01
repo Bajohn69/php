@@ -2,7 +2,7 @@
 session_start();
 // 若已登入會員
 if (! empty($_SESSION['user'])){
-    header('Location: ./');
+    header('Location: ./'); // 轉向到首頁
     exit;
 }
 
@@ -49,8 +49,8 @@ if (! empty($_SESSION['user'])){
             return;
         }
         $.post(
-            'login-api.php',
-            $(document.form1).serialize(),
+            'login-api.php', // 對象
+            $(document.form1).serialize(), // 資料(表單內容)
             function(data){
                 if(data.success){
                     location.href = './';
